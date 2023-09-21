@@ -2,11 +2,13 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+st.title("アンケート")
+
 # Excelファイルを読み込む
 @st.cache
 def load_data():
     # Excelファイルのパスを指定します
-    path = "your_github_repo_path/questionnaire.xlsx"
+    path = "questionnaire.xlsx"
     data = pd.read_excel(path)
     return data
 
