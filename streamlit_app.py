@@ -2,37 +2,52 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-st.title("あああああ")
+import streamlit as st
+import pandas as pd
+import plotly.express as px
 
 # Excelファイルを読み込む
+@st.cache  # データのキャッシュを有効にして高速化
 def load_data():
-    # Excelファイルのパスを指定します
-    path = "questionnaire.xlsx"
-    data = pd.read_excel(path)
-    return data
+    df = pd.read_excel("questions.xlsx")  # Excelファイルのパスを指定
+    return df
 
-data = load_data()
+df = load_data()
 
-# アンケートの回答を収集
-responses = {}
-for index, row in data.iterrows():
-    question_number = row["設問番号"]
-    question_name = row["設問名"]
-    answer = st.radio(
-        f"{question_number}. {question_name}",
-        ["4　とてもあてはまる","3　少しあてはまる","2　あまりあてはまらない","1　全くあてはまらない"]
-    )
-    responses[question_number] = {"answer": int(answer[0]), "factor": row["因子名"]}
+# 設問を表示
+st.title("アンケートアプリ")
 
-# 平均点の計算
-factors = data["因子名"].unique()
-avg_scores = {}
+# ラジオボタンのデフォルト選択肢
+options = ["4 とてもあてはまる", "3 少しあてはまる", "2 あまりあてはまらない", "1 全くあてはまらない"]
+
+# 因子名の一覧を取得
+factors = df["因子名"].unique()
+
+# ラジオボタンで回答を収集し、因子ごとの平均点を計算
+factor_scores = {}
 for factor in factors:
-    total = sum([resp["answer"] for q_num, resp in responses.items() if resp["factor"] == factor])
-    count = sum([1 for q_num, resp in responses.items() if resp["factor"] == factor])
-    avg_scores[factor] = total / count
+    st.subheader(factor)
+    factor_data = df[df["因子名"] == factor]
+    total_score = 0
+    for idx, row in factor_data.iterrows():
+        st.write(row["設問名"])
+        score = st.radio("回答", options)
+        # 反転項目の場合、数値を反転
+        if row["反転項目"]:
+            score = 5 - int(score[0])
+        else:
+            score = int(score[0])
+        total_score += score
+    avg_score = total_score / len(factor_data)
+    factor_scores[factor] = avg_score
+    st.write(f"{factor}の平均点: {avg_score:.2f}")
 
-# レーダーチャートの表示
-df_avg_scores = pd.DataFrame([avg_scores])
-fig = px.line_polar(df_avg_scores, r=df_avg_scores.columns, theta=df_avg_scores.columns, line_close=True)
-st.plotly_chart(fig)
+# レーダーチャートを描画
+if factor_scores:
+    st.subheader("因子ごとの評価")
+    fig = px.line_polar(
+        r=list(factor_scores.values()),
+        theta=list(factor_scores.keys()),
+        line_close=True
+    )
+    st.plotly_chart(fig)
