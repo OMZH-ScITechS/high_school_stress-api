@@ -5,7 +5,7 @@ import plotly.express as px
 # Excelファイルを読み込む
 @st.cache
 def load_data():
-    df = pd.read_excel("questionnaire (1).xlsx")
+    df = pd.read_excel("questionnaire.xlsx")
     return df
 
 def calculate_avg_score(factor_data):
