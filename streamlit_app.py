@@ -23,7 +23,7 @@ def calculate_avg_score(factor_data):
 df = load_data()
 
 # 設問を表示
-st.title("ストレス診断アプリ")
+st.title("ストレスチェックアプリ")
 
 # ラジオボタンのデフォルト選択肢
 options1 = ["1 全くあてはまらない", "2 あまりあてはまらない", "3 少しあてはまる", "4 とてもあてはまる"]
