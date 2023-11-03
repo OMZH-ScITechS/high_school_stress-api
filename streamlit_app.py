@@ -45,6 +45,6 @@ if factor_scores:
         theta=list(factor_scores.keys()),
         line_close=True
     )
-    fig.update_layout(font=dict(size=16))
+    fig.update_layout(font=dict(size=20))
 
     st.plotly_chart(fig)
