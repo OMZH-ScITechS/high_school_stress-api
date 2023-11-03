@@ -24,6 +24,7 @@ df = load_data()
 
 # 設問を表示
 st.title("ストレスチェックアプリ")
+st.caption("Created by 72回生　理数科情報班")
 
 # ラジオボタンのデフォルト選択肢
 options1 = ["1 全くあてはまらない", "2 あまりあてはまらない", "3 少しあてはまる", "4 とてもあてはまる"]
@@ -44,4 +45,6 @@ if factor_scores:
         theta=list(factor_scores.keys()),
         line_close=True
     )
+    fig.update_layout(font=dict(size=16))
+
     st.plotly_chart(fig)
