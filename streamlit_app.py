@@ -56,6 +56,8 @@ if factor_scores:
         ),
         font=dict(size=20)
     )
+
+    st.plotly_chart(fig)
 def get_message(avg_score, factor_name):
     if factor_name == "心理的余裕":
         if avg_score < 2.0:
@@ -67,4 +69,3 @@ def get_message(avg_score, factor_name):
         else:
             return "心理的余裕は深刻な状態です。早急に対策が必要です。"
 df = load_data()
-    st.plotly_chart(fig)
