@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 
 # Excelファイルを読み込む
- df = load_data()
+
 @st.cache
 def load_data():
     df = pd.read_excel("questionnaire.xlsx")
@@ -22,7 +22,7 @@ def calculate_avg_score(factor_data):
     return total_score / len(factor_data)
 
 
-
+df = load_data()
 # 設問を表示
 st.title("ストレスチェックアプリ")
 st.caption("Created by 72回生　理数科情報班")
