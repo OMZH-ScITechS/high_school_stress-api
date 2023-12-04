@@ -20,17 +20,7 @@ def calculate_avg_score(factor_data):
         total_score += score
     return total_score / len(factor_data)
 
-def get_message(avg_score, factor_name):
-    if factor_name == "心理的余裕":
-        if avg_score < 2.0:
-            return "心理的余裕は良い状態です。"
-        elif 2.0 <= avg_score < 3.0:
-            return "心理的余裕は普通の状態です。"
-        elif 3.0 <= avg_score < 4.0:
-            return "心理的余裕は注意が必要な状態です。"
-        else:
-            return "心理的余裕は深刻な状態です。早急に対策が必要です。"
-df = load_data()
+
 
 # 設問を表示
 st.title("ストレスチェックアプリ")
@@ -66,5 +56,15 @@ if factor_scores:
         ),
         font=dict(size=20)
     )
-
+def get_message(avg_score, factor_name):
+    if factor_name == "心理的余裕":
+        if avg_score < 2.0:
+            return "心理的余裕は良い状態です。"
+        elif 2.0 <= avg_score < 3.0:
+            return "心理的余裕は普通の状態です。"
+        elif 3.0 <= avg_score < 4.0:
+            return "心理的余裕は注意が必要な状態です。"
+        else:
+            return "心理的余裕は深刻な状態です。早急に対策が必要です。"
+df = load_data()
     st.plotly_chart(fig)
