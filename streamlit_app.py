@@ -47,4 +47,14 @@ if factor_scores:
     )
     fig.update_layout(font=dict(size=20))
 
+    # レーダーチャートの半径を固定
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(
+                range=[0, 4]  # 半径の範囲を指定
+            )
+        ),
+        font=dict(size=20)
+    )
+
     st.plotly_chart(fig)
