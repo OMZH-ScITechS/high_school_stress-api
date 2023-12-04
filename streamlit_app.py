@@ -21,7 +21,7 @@ def calculate_avg_score(factor_data):
     return total_score / len(factor_data)
 
 def get_message(avg_score, factor_name):
-    if factor_name == ("因子名"):
+    if factor_name == "因子名":
         if avg_score < 2.0:
             return "因子名は良い状態です。"
         elif 2.0 <= avg_score < 3.0:
