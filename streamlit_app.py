@@ -65,16 +65,20 @@ if factor_scores:
 
     st.plotly_chart(fig)
 
+
+st.write("＜F1　人間関係＞")
 if avg_score_f1 < 2.5 :
     st.write("aaa")
 else:
     st.write("ddd")
 
+st.write("＜F2　心理的余裕＞")
 if avg_score_f2 < 2.5 :
     st.write("bbb")
 else:
     st.write("eee")
 
+st.write("＜F3　食事・睡眠＞")
 if avg_score_f3 < 2.5 :
     st.write("CCC")
 else:
