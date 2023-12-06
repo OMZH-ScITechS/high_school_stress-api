@@ -67,16 +67,16 @@ if factor_scores:
 
 if avg_score_f1 < 2.5 :
     st.write("aaa")
-    else:
+else:
     st.write("ddd")
 
 if avg_score_f2 < 2.5 :
     st.write("bbb")
-    else:
+else:
     st.write("eee")
 
 if avg_score_f3 < 2.5 :
     st.write("CCC")
-    else:
+else:
     st.write("fff")
 
