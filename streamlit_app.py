@@ -69,7 +69,7 @@ if factor_scores:
 def get_message(avg_score, factor_name):
     if factor_name == "F1":
         if avg_score < 2.0:
-            st.write("F1は良い状態です。")
+        st.write("F1は良い状態です。")
         elif 2.0 <= avg_score < 3.0:
             st.write("F1は普通の状態です。")
         elif 3.0 <= avg_score < 4.0:
