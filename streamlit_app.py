@@ -67,27 +67,16 @@ if factor_scores:
 
 if avg_score_f1 < 2.5 :
     st.write("aaa")
+    else
+    st.write("ddd")
 
-""" メッセージを表示
-def get_message(avg_score, factor_name):
-    if factor_name == "F1":
-        if avg_score < 2.0:
-            st.write("F1は良い状態です。")
-        elif 2.0 <= avg_score < 3.0:
-            st.write("F1は普通の状態です。")
-        elif 3.0 <= avg_score < 4.0:
-            st.write("F1は注意が必要な状態です。")
-        else:
-            st.write("F1は深刻な状態です。早急に対策が必要です.")
-    
-    elif factor_name == "F2":
-        # Add similar logic for F2
-    
-    elif factor_name == "F3":
-        # Add similar logic for F3
+if avg_score_f2 < 2.5 :
+    st.write("bbb")
+    else
+    st.write("eee")
 
-# 3つの因子に対するメッセージを表示
-get_message(avg_score_f1, "F1")
-get_message(avg_score_f2, "F2")
-get_message(avg_score_f3, "F3")
-"""
+if avg_score_f3 < 2.5 :
+    st.write("CCC")
+    else
+    st.write("fff")
+
