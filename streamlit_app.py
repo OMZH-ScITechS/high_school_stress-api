@@ -70,4 +70,4 @@ def get_message(avg_score, factor_name):
             st.write( "心理的余裕は注意が必要な状態です。")
         else:
             st.write("心理的余裕は深刻な状態です。早急に対策が必要です。") 
-     st.write{get_message(avg_score, factor_name)}
+    st.write{get_message(avg_score, factor_name)}
