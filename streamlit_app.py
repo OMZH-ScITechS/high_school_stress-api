@@ -59,7 +59,7 @@ if factor_scores:
     )
 
     st.plotly_chart(fig)
-def get_message(avg_score(factor_name)):
+def get_message(avg_score, factor_name):
     if factor_name == "心理的余裕":
         if avg_score < 2.0:
            st.write("心理的余裕は良い状態です。") 
