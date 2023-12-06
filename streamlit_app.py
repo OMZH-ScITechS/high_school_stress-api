@@ -78,10 +78,10 @@ def get_message(avg_score, factor_name):
             st.write("F1は深刻な状態です。早急に対策が必要です.")
     
     elif factor_name == "F2":
-        # Add similar logic for F2
+     # Add similar logic for F2
     
     elif factor_name == "F3":
-        # Add similar logic for F3
+     # Add similar logic for F3
 
 # 3つの因子に対するメッセージを表示
 get_message(avg_score_f1, "F1")
