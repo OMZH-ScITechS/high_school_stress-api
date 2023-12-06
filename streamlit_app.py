@@ -65,7 +65,10 @@ if factor_scores:
 
     st.plotly_chart(fig)
 
-# メッセージを表示
+if avg_score_f1 < 2.5 :
+    st.write("aaa")
+
+""" メッセージを表示
 def get_message(avg_score, factor_name):
     if factor_name == "F1":
         if avg_score < 2.0:
@@ -87,3 +90,4 @@ def get_message(avg_score, factor_name):
 get_message(avg_score_f1, "F1")
 get_message(avg_score_f2, "F2")
 get_message(avg_score_f3, "F3")
+"""
