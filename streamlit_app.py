@@ -70,6 +70,7 @@ st.subheader("＜F1　人間関係＞")
 if avg_score_f1 < 2.5 :
     #平均値未満の時のメッセージ
     st.write("aaa")
+    st.write("aaa")
 else:
     #平均値以上の時のメッセージ
     st.write("ddd")
