@@ -38,6 +38,11 @@ for factor, factor_data in df.groupby("因子名"):
     factor_scores[factor] = avg_score
     st.write(f"{factor}の平均点: {avg_score:.2f}")
 
+# 3つの因子F1～F3の平均値を変数に格納
+avg_score_f1 = factor_scores.get("F1", 0)
+avg_score_f2 = factor_scores.get("F2", 0)
+avg_score_f3 = factor_scores.get("F3", 0)
+
 # レーダーチャートを描画
 if factor_scores:
     st.subheader("因子ごとの評価")
@@ -60,14 +65,25 @@ if factor_scores:
 
     st.plotly_chart(fig)
 
+# メッセージを表示
 def get_message(avg_score, factor_name):
-    if factor_name == "心理的余裕":
+    if factor_name == "F1":
         if avg_score < 2.0:
-            st.write("心理的余裕は良い状態です。") 
+            st.write("F1は良い状態です。")
         elif 2.0 <= avg_score < 3.0:
-            st.write( "心理的余裕は普通の状態です。")
+            st.write("F1は普通の状態です。")
         elif 3.0 <= avg_score < 4.0:
-            st.write( "心理的余裕は注意が必要な状態です。")
+            st.write("F1は注意が必要な状態です。")
         else:
-            st.write("心理的余裕は深刻な状態です。早急に対策が必要です。") 
-    st.write(get_message(avg_score, factor_name))
+            st.write("F1は深刻な状態です。早急に対策が必要です.")
+    
+    elif factor_name == "F2":
+        # Add similar logic for F2
+    
+    elif factor_name == "F3":
+        # Add similar logic for F3
+
+# 3つの因子に対するメッセージを表示
+get_message(avg_score_f1, "F1")
+get_message(avg_score_f2, "F2")
+get_message(avg_score_f3, "F3")
