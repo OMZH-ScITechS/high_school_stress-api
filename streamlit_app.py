@@ -20,6 +20,7 @@ def calculate_avg_score(factor_data):
             score = int(score[0])
         total_score += score
     return total_score / len(factor_data)
+    return avg_score, individual_scores
 
 
 df = load_data()
