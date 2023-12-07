@@ -11,20 +11,15 @@ def load_data():
 
 def calculate_avg_score(factor_data):
     total_score = 0
-    individual_scores = {}  # 各因子の個々の得点を格納する辞書
     for idx, row in factor_data.iterrows():
         st.markdown(f"**{row['設問名']}**")
-        # ウィジェットIDを一意にするために設問名とインデックスを組み合わせる
-        unique_key = f"{row['設問名']}_{idx}"
-        score = st.radio("回答", options1, key=unique_key)
+        score = st.radio("回答", options1, key=row["設問名"])
         if not pd.isna(row["反転"]):
             score = 5 - int(score[0])
         else:
             score = int(score[0])
         total_score += score
-        individual_scores[row["設問名"]] = score  # 各因子の得点を格納
-    avg_score = total_score / len(factor_data)
-    return avg_score, individual_scores
+    return total_score / len(factor_data)
 
 
 df = load_data()
@@ -39,11 +34,10 @@ options1 = ["1 全くあてはまらない", "2 あまりあてはまらない",
 factor_scores = {}
 for factor, factor_data in df.groupby("因子名"):
     st.subheader(factor)
-    avg_score, individual_scores = calculate_avg_score(factor_data)
     avg_score = calculate_avg_score(factor_data)
     factor_scores[factor] = avg_score
     st.write(f"{factor}の平均点: {avg_score:.2f}")
-    st.write(f"{factor}の得点: {str(individual_scores)}")
+    st.write(f"{factor}の得点: {individual_scores}")
 
 # 3つの因子F1～F3の平均値を変数に格納
 avg_score_f1 = factor_scores.get("F1", 0)
@@ -98,4 +92,3 @@ if avg_score_f3 < 2.83 :
 else:
     #平均値以上の時のメッセージ
     st.write("「食事・睡眠」の得点は平均値(2.83)を上回っています。")
-
