@@ -86,7 +86,7 @@ else:
 st.subheader("＜F3　食事・睡眠＞")
 if avg_score_f3 < 3.55 :
     #平均値未満の時のメッセージ
-    st.write("あなたの得点はavg_score_f1です")
+    st.write(avg_score_f1)
     st.write("「食事・睡眠」の得点は平均値(3.55)を下回っています。")
 else:
     #平均値以上の時のメッセージ
