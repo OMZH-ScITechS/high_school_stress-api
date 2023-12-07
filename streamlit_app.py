@@ -37,7 +37,6 @@ for factor, factor_data in df.groupby("因子名"):
     avg_score = calculate_avg_score(factor_data)
     factor_scores[factor] = avg_score
     st.write(f"{factor}の平均点: {avg_score:.2f}")
-    st.write(f"{factor}の得点: {individual_scores}")
 
 # 3つの因子F1～F3の平均値を変数に格納
 avg_score_f1 = factor_scores.get("F1", 0)
