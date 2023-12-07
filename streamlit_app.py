@@ -20,6 +20,7 @@ def calculate_avg_score(factor_data):
         else:
             score = int(score[0])
         total_score += score
+        individual_scores[row["設問名"]] = score
     return total_score / len(factor_data)
     return avg_score, individual_scores
 
