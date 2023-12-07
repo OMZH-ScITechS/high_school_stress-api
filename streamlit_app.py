@@ -11,6 +11,7 @@ def load_data():
 
 def calculate_avg_score(factor_data):
     total_score = 0
+    individual_scores = {}
     for idx, row in factor_data.iterrows():
         st.markdown(f"**{row['設問名']}**")
         score = st.radio("回答", options1, key=row["設問名"])
