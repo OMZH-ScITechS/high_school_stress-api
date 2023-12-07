@@ -37,6 +37,7 @@ options1 = ["1 全くあてはまらない", "2 あまりあてはまらない",
 factor_scores = {}
 for factor, factor_data in df.groupby("因子名"):
     st.subheader(factor)
+    avg_score, individual_scores = calculate_avg_score(factor_data)
     avg_score = calculate_avg_score(factor_data)
     factor_scores[factor] = avg_score
     st.write(f"{factor}の平均点: {avg_score:.2f}")
