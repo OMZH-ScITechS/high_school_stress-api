@@ -14,7 +14,9 @@ def calculate_avg_score(factor_data):
     individual_scores = {}  # 各因子の個々の得点を格納する辞書
     for idx, row in factor_data.iterrows():
         st.markdown(f"**{row['設問名']}**")
-        score = st.radio("回答", options1, key=row["設問名"])
+        # ウィジェットIDを一意にするために設問名とインデックスを組み合わせる
+        unique_key = f"{row['設問名']}_{idx}"
+        score = st.radio("回答", options1, key=unique_key)
         if not pd.isna(row["反転"]):
             score = 5 - int(score[0])
         else:
