@@ -11,7 +11,7 @@ def load_data():
 
 def calculate_avg_score(factor_data):
     total_score = 0
-    individual_scores = {}
+    individual_scores = {}  # 各因子の個々の得点を格納する辞書
     for idx, row in factor_data.iterrows():
         st.markdown(f"**{row['設問名']}**")
         score = st.radio("回答", options1, key=row["設問名"])
@@ -20,8 +20,8 @@ def calculate_avg_score(factor_data):
         else:
             score = int(score[0])
         total_score += score
-        individual_scores[row["設問名"]] = score
-    return total_score / len(factor_data)
+        individual_scores[row["設問名"]] = score  # 各因子の得点を格納
+    avg_score = total_score / len(factor_data)
     return avg_score, individual_scores
 
 
