@@ -67,26 +67,26 @@ if factor_scores:
 
 
 st.subheader("＜F1　人間関係＞")
-if avg_score_f1 < 2.5 :
+if avg_score_f1 < 4.06 :
     #平均値未満の時のメッセージ
-    st.write("aaa")
+    st.write("「人間関係因子」の得点は平均値(4.06)を下回っています。")
     st.write("aaa")
 else:
     #平均値以上の時のメッセージ
-    st.write("ddd")
+    st.write("「人間関係因子」の得点は平均値(4.06)を上回っています。")
 
 st.subheader("＜F2　心理的余裕＞")
-if avg_score_f2 < 2.5 :
+if avg_score_f2 < 2.87 :
     #平均値未満の時のメッセージ
-    st.write("bbb")
+    st.write("「心理的余裕因子」の得点は平均値(2.87)を下回っています。")
 else:
     #平均値以上の時のメッセージ
-    st.write("eee")
+    st.write("「心理的余裕因子」の得点は平均値(2.87)を上回っています。")
 
 st.subheader("＜F3　食事・睡眠＞")
-if avg_score_f3 < 2.5 :
+if avg_score_f3 < 3.55 :
     #平均値未満の時のメッセージ
-    st.write("CCC")
+    st.write("「食事・睡眠」の得点は平均値(2.87)を上回っています。")
 else:
     #平均値以上の時のメッセージ
     st.write("fff")
