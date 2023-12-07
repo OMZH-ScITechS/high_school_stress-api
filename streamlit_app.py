@@ -43,14 +43,20 @@ avg_score_f1 = factor_scores.get("F1", 0)
 avg_score_f2 = factor_scores.get("F2", 0)
 avg_score_f3 = factor_scores.get("F3", 0)
 
+# 一般的な平均値の設定
+general_averages = {"F1": 1.94, "F2": 2.81, "F3": 2.83}
+
+ 
 # レーダーチャートを描画
 if factor_scores:
     st.subheader("因子ごとの評価")
-    fig = px.line_polar(
-        r=list(factor_scores.values()),
-        theta=list(factor_scores.keys()),
-        line_close=True
-    )
+        # ユーザーのスコアと一般平均のスコアをDataFrameにまとめる
+    chart_data = pd.DataFrame({
+    "Your Score": list(factor_scores.values()),
+    "General Average": list(general_averages.values())
+    }, index=list(factor_scores.keys()))
+    fig = px.line_polar(chart_data, line_close=True)
+    
     fig.update_layout(font=dict(size=20))
 
     # レーダーチャートの半径を固定
