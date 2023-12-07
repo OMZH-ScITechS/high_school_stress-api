@@ -106,31 +106,18 @@ if factor_scores:
  
 
 # 各因子ごとの評価と提案メッセージ
-st.subheader("＜F1　人間関係＞")
-avg_score_f1 = factor_scores.get("F1", 0)
-st.write(f"あなたの[ F1 人間関係 ]のスコアは {avg_score_f1} です。")
-if avg_score_f1 < 1.94:
-    st.write("aaa")
-    st.write("aaa")
-else:
-    st.write("ddd")
+for factor, factor_data in df.groupby("因子名"):
+    st.subheader(factor)
+    avg_score = calculate_avg_score(factor_data)
 
- 
+    # ユーザーの因子平均値を格納
+    if factor == "F1":
+        avg_score_f1 = avg_score
+    elif factor == "F2":
+        avg_score_f2 = avg_score
+    else:
+        avg_score_f3 = avg_score
 
-st.subheader("＜F2　心理的余裕＞")
-avg_score_f2 = factor_scores.get("F2", 0)
-st.write(f"あなたの[ F2　心理的余裕 ]のスコアは {avg_score_f2}です。")
-if avg_score_f2 < 2.81:
-    st.write("bbb")
-else:
-    st.write("eee")
-
- 
-
-st.subheader("＜F3　食事・睡眠＞")
-avg_score_f3 = factor_scores.get("F3", 0)
-st.write(f"あなたの[ F2　心理的余裕 ]のスコアは {avg_score_f3 }です。")
-if avg_score_f3 < 2.83:
-    st.write("CCC")
-else:
-    st.write("fff")
+    st.write(f"あなたの[ {factor} ]のスコアは {avg_score} です。")
+    if avg_score < general_averages[factor]:
+        st.write(f"【注意】この因子のスコアが低いようです。")
