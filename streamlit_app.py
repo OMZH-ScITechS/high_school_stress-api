@@ -4,8 +4,8 @@ import plotly.express as px
 
 # フィードバックを表示する関数
 def display_feedback(feedback_data, factor):
-    feedback_rows = feedback_data[factor].dropna().reset_index(drop=True)
-    markup_rows = feedback_data['マークアップ'].dropna().reset_index(drop=True)
+    feedback_rows = feedback_data[factor].dropna()
+    markup_rows = feedback_data['マークアップ'].dropna()
     for markup, row in zip(markup_rows, feedback_rows):
         if markup.startswith("#"):
             st.markdown(f"{markup} {row}")
