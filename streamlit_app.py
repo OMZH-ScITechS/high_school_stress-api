@@ -9,7 +9,7 @@ def display_feedback(feedback_data, factor):
         st.markdown(row)
 
 # Excelファイルを読み込む関数
-@st.cache
+@st.cache  # Consider changing to st.cache_data or st.cache_resource based on your Streamlit version
 def load_data(file_path):
     df_questions = pd.read_excel(file_path, sheet_name='質問項目')
     df_factors_avg = pd.read_excel(file_path, sheet_name='因子平均')
@@ -74,5 +74,3 @@ for factor in user_scores:
     else:
         # 平均値未満の場合のフィードバック
         display_feedback(feedback_below, factor)
-
-
