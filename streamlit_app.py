@@ -2,58 +2,52 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# Excelファイルを読み込む
-
+# Excelファイルを読み込む関数
 @st.cache
-def load_data():
-    df = pd.read_excel("questionnaire.xlsx")
-    return df
+def load_data(file_path):
+    df_questions = pd.read_excel(file_path, sheet_name='質問項目')
+    df_factors_avg = pd.read_excel(file_path, sheet_name='因子平均')
+    feedback_above = pd.read_excel(file_path, sheet_name='フィードバック（基準以上）')
+    feedback_below = pd.read_excel(file_path, sheet_name='フィードバック（基準未満）')
+    return df_questions, df_factors_avg, feedback_above, feedback_below
 
-def calculate_avg_score(factor_data):
+file_path = '/mnt/data/questionnaire.xlsx'
+df_questions, df_factors_avg, feedback_above, feedback_below = load_data(file_path)
+
+# ラジオボタンのデフォルト選択肢
+options1 = ["1 全くあてはまらない", "2 あまりあてはまらない", "3 少しあてはまる", "4 とてもあてはまる"]
+
+# 設問を表示
+st.title("ストレスチェックアプリ")
+st.caption("Created by 72回生　理数科情報班")
+
+# 各因子の平均点を計算
+user_scores = {}
+for factor, factor_data in df_questions.groupby("因子名"):
+    st.subheader(factor)
     total_score = 0
-    for idx, row in factor_data.iterrows():
-        st.markdown(f"**{row['設問名']}**")
+    num_questions = 0
+    for _, row in factor_data.iterrows():
         score = st.radio("回答", options1, key=row["設問名"])
         if not pd.isna(row["反転"]):
             score = 5 - int(score[0])
         else:
             score = int(score[0])
         total_score += score
-    return total_score / len(factor_data)
-
-
-df = load_data()
-# 設問を表示
-st.title("ストレスチェックアプリ")
-st.caption("Created by 72回生　理数科情報班")
-
-# ラジオボタンのデフォルト選択肢
-options1 = ["1 全くあてはまらない", "2 あまりあてはまらない", "3 少しあてはまる", "4 とてもあてはまる"]
-
-# ラジオボタンで回答を収集し、因子ごとの平均点を計算
-factor_scores = {}
-for factor, factor_data in df.groupby("因子名"):
-    st.subheader(factor)
-    avg_score = calculate_avg_score(factor_data)
-    factor_scores[factor] = avg_score
+        num_questions += 1
+    avg_score = total_score / num_questions if num_questions > 0 else 0
+    user_scores[factor] = avg_score
     st.write(f"{factor}の平均点: {avg_score:.2f}")
 
-# 3つの因子F1～F3の平均値を変数に格納
-avg_score_f1 = factor_scores.get("F1", 0)
-avg_score_f2 = factor_scores.get("F2", 0)
-avg_score_f3 = factor_scores.get("F3", 0)
-
-# レーダーチャートを描画
-if factor_scores:
+# レーダーチャートの描画
+if user_scores:
     st.subheader("因子ごとの評価")
     fig = px.line_polar(
-        r=list(factor_scores.values()),
-        theta=list(factor_scores.keys()),
+        r=list(user_scores.values()),
+        theta=list(user_scores.keys()),
         line_close=True
     )
     fig.update_layout(font=dict(size=20))
-
-    # レーダーチャートの半径を固定
     fig.update_layout(
         polar=dict(
             radialaxis=dict(
@@ -62,61 +56,21 @@ if factor_scores:
         ),
         font=dict(size=20)
     )
-
     st.plotly_chart(fig)
 
+# ユーザーのスコアを評価し、適切なフィードバックを表示
+for factor in user_scores:
+    avg_value = df_factors_avg[df_factors_avg["因子名"] == factor]["平均値"].iloc[0]
+    st.subheader(f"＜{factor}＞")
+    if user_scores[factor] >= avg_value:
+        # 平均値以上の場合のフィードバック
+        display_feedback(feedback_above, factor)
+    else:
+        # 平均値未満の場合のフィードバック
+        display_feedback(feedback_below, factor)
 
-st.subheader("＜F1　人間関係＞")
-if avg_score_f1 < 1.94 :
-    #平均値未満の時のメッセージ
-    st.write("**「人間関係因子」の得点は平均値(1.94)を下回っています。**")
-    st.write("以下のコーピング法を提案します。")
-    st.write("**①有酸素運動(ジョギングやランニング)**")
-    st.write("全身を動かすことで大きなエネルギーを使うため、カロリー消費や心肺機能の向上に効果的です。")
-    st.write("**②レジスタンストレーニング(スクワットやフィットネス機器等を使用したトレーニング)**")
-    st.write("習慣的にレジスタンストレーニングを行うと睡眠の質の向上につながります。")
-    st.write("**③規則的な睡習習慣**")
-    st.write("毎日同じ時間に寝床に入り、同じ時間に起きることで、体内時計を整えることで、質の高い睡眠を促進することができます​。")
-    st.write("**④就寝前のリラックスの習慣**")
-    st.write("深呼吸、瞑想、温かい入浴、リラックス音楽、アロマ等の匂いなどが役立ちます。")
-    st.write("**⑤寝室環境の最適化**")
-    st.write("快適な寝室環境を整え、暗い部屋、快適な温度(13℃～29℃)や湿度(40%～60%)、静かな環境を確保しましょう。​​")
-else:
-    #平均値以上の時のメッセージ
-    st.write("**「人間関係因子」の得点は平均値(1.94)を上回っています。**")
-
-st.subheader("＜F2　心理的余裕＞")
-if avg_score_f2 < 2.81 :
-    #平均値未満の時のメッセージ
-    st.write("**「心理的余裕因子」の得点は平均値(2.81)を下回っています。**")
-    st.write("以下のコーピング法を提案します。​")
-    st.write("**①運動時間の確保**​")
-    st.write("ヨガやウォーキングがジョギングなどがおすすめです。​")
-    st.write("**②規則的な睡眠習慣**​")
-    st.write("毎日同じ時間に寝床に入り、同じ時間に起きることで、体内時計を整えることで、質の高い睡眠を促進することができます​。​")
-    st.write("**③就寝前のリラックスの習慣**​")
-    st.write("深呼吸、瞑想、温かい入浴、リラックス音楽、アロマ等の匂いなどが役立ちます。​")
-    st.write("**④寝室環境の最適化**​")
-    st.write("快適な寝室環境を整え、暗い部屋、快適な温度(13℃～29℃)や湿度(40%～60%)、静かな環境を確保しましょう。​")
-else:
-    #平均値以上の時のメッセージ
-    st.write("**「心理的余裕因子」の得点は平均値(2.81)を上回っています。**")
-
-st.subheader("＜F3　食事・睡眠＞")
-if avg_score_f3 < 2.83 :
-    #平均値未満の時のメッセージ
-    st.write("**「食事・睡眠」の得点は平均値(2.83)を下回っています。**")
-    st.write("以下のコーピング法を提案します。​")
-    st.write("**①規則的な睡習慣眠​**")
-    st.write("毎日同じ時間に寝床に入り、同じ時間に起きることで、体内時計を整えることで、質の高い睡眠を促進することができます​。​")
-    st.write("**②就寝前のリラックスの習慣**​")
-    st.write("深呼吸、瞑想、温かい入浴、リラックス音楽、アロマ等の匂いなどが役立ちます。​")
-    st.write("**③寝室環境の最適化**​")
-    st.write("快適な寝室環境を整え、暗い部屋、快適な温度(13℃～29℃)や湿度(40%～60%)、静かな環境を確保しましょう。​")
-    st.write("**④バランスのとれた​食事**​")
-    st.write("バランスの取れた食事で必要な栄養素を摂り、高脂肪や高塩分、高糖分の食事、間食を避けることが心拍数の安定に寄与します。​")
-    st.write("**⑤適切な水分摂取​**")
-    st.write("適切な水分摂取は循環を助け、心臓が効果的に働くのに役立ちます。​")
-else:
-    #平均値以上の時のメッセージ
-    st.write("**「食事・睡眠」の得点は平均値(2.83)を上回っています。**")
+# フィードバックを表示する関数
+def display_feedback(feedback_data, factor):
+    feedback_rows = feedback_data[factor].dropna()
+    for row in feedback_rows:
+        st.markdown(row)
