@@ -67,8 +67,14 @@ if user_scores:
     })
 
     # レーダーチャートのプロット
-    fig = px.line_polar(radar_data, r='ユーザースコア', theta='因子', line_close=True, title='ユーザースコア')
-    fig.add_trace(px.line_polar(radar_data, r='全体平均', theta='因子', line_close=True, title='全体平均').data[0])
+    fig = px.line_polar(radar_data, r='ユーザースコア', theta='因子', line_close=True, title='ユーザースコアと全体平均の比較')
+    fig.add_trace(px.line_polar(radar_data, r='全体平均', theta='因子', line_close=True).data[0])
+
+    # ユーザースコアの線の色を青に設定
+    fig.data[0].line.color = 'blue'
+
+    # 全体平均の線の色を赤に設定
+    fig.data[1].line.color = 'red'
 
     fig.update_layout(
         polar=dict(
