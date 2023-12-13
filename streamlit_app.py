@@ -83,6 +83,7 @@ if user_scores:
             )
         ),
         font=dict(size=20)
+        showlegend=True  # 凡例を表示する
     )
     st.plotly_chart(fig)
 
