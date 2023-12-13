@@ -35,7 +35,7 @@ for factor, factor_data in df_questions.groupby("因子名"):
     num_questions = 0
     for _, row in factor_data.iterrows():
         st.markdown(f"**{row['設問名']}**")
-        score = st.radio("回答", options1, key=row["設問名"])
+        score = st.radio(options1, key=row["設問名"])
         if not pd.isna(row["反転"]):
             score = 5 - int(score[0])
         else:
