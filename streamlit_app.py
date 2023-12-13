@@ -7,7 +7,8 @@ def display_feedback(feedback_data, factor):
     feedback_rows = feedback_data[factor].dropna()
     markup_rows = feedback_data['マークアップ'].dropna()
     for markup, row in zip(markup_rows, feedback_rows):
-        if markup.startswith("#"):
+        # マークアップ列に何かが入力されている場合は、その記号を使う
+        if pd.notna(markup):
             st.markdown(f"{markup} {row} {markup}")
         else:
             st.markdown(row)
