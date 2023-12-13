@@ -5,8 +5,12 @@ import plotly.express as px
 # フィードバックを表示する関数
 def display_feedback(feedback_data, factor):
     feedback_rows = feedback_data[factor].dropna()
-    for row in feedback_rows:
-        st.markdown(row)
+    markup_rows = feedback_data['マークアップ'].dropna()
+    for markup, row in zip(markup_rows, feedback_rows):
+        if markup.startswith("#"):
+            st.markdown(f"{markup} {row}")
+        else:
+            st.markdown(row)
 
 # Excelファイルを読み込む関数
 @st.cache  # Consider changing to st.cache_data or st.cache_resource based on your Streamlit version
