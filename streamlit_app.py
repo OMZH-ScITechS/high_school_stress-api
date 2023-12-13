@@ -5,9 +5,9 @@ import plotly.express as px
 # フィードバックを表示する関数
 def display_feedback(feedback_data, factor):
     feedback_rows = feedback_data[factor].dropna()
-    markup_rows = feedback_data['マークアップ'].dropna()
+    markup_rows = feedback_data['マークダウン'].dropna()
     for markup, row in zip(markup_rows, feedback_rows):
-        # マークアップ列に何かが入力されている場合は、その記号を使う
+        # マークダウン列に何かが入力されている場合は、その記号を使う
         if pd.notna(markup):
             st.markdown(f"{markup} {row} ")
         else:
