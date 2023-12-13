@@ -70,7 +70,7 @@ st.subheader("＜F1　人間関係＞")
 if avg_score_f1 < 1.94 :
     #平均値未満の時のメッセージ
     st.write("「人間関係因子」の得点は平均値(1.94)を下回っています。")
-    st.write("aaa")
+    st.write("")
 else:
     #平均値以上の時のメッセージ
     st.write("「人間関係因子」の得点は平均値(1.94)を上回っています。")
@@ -87,7 +87,7 @@ else:
 st.subheader("＜F3　食事・睡眠＞")
 if avg_score_f3 < 2.83 :
     #平均値未満の時のメッセージ
-    st.write(avg_score_f1)
+    st.write("")
     st.write("「食事・睡眠」の得点は平均値(2.83)を下回っています。")
     st.write("")
 else:
