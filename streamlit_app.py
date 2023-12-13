@@ -67,6 +67,7 @@ if user_scores:
 
     # レーダーチャートのプロット
     fig = px.line_polar(radar_data, r='ユーザースコア', theta='因子', line_close=True, title='ユーザースコア')
+    # 全体平均の赤い線を追加
     fig.add_trace(px.line_polar(radar_data, r='全体平均', theta='因子', line_close=True, line_color='red').data[0])
 
     fig.update_layout(
