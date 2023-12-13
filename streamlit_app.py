@@ -70,7 +70,7 @@ for factor in user_scores:
     st.subheader(f"＜{factor}＞")
     if user_scores[factor] >= avg_value:
         # ユーザーの因子得点を表示
-        st.markdown(f"あなたの＜{factor}＞の得点は、{user_scores[factor]}です。")
+        st.markdown(f"あなたの＜{factor}＞の得点は「{user_scores[factor]:.2f}」です。")
         # 平均値以上の場合のフィードバック
         display_feedback(feedback_above, factor)
     else:
