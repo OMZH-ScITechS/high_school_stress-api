@@ -53,16 +53,26 @@ for factor, factor_data in df_questions.groupby("因子名"):
 # レーダーチャートの描画
 if user_scores:
     st.subheader("＜因子ごとの評価＞")
-    fig = px.line_polar(
-        r=list(user_scores.values()),
-        theta=list(user_scores.keys()),
-        line_close=True
-    )
-    fig.update_layout(font=dict(size=20))
+    
+    # レーダーチャート用のデータの準備
+    user_scores_list = list(user_scores.values())
+    avg_scores_list = [df_factors_avg[df_factors_avg["因子名"] == factor]["平均値"].iloc[0] for factor in user_scores]
+
+    # プロット用のDataFrameを作成
+    radar_data = pd.DataFrame({
+        '因子': list(user_scores.keys()),
+        'ユーザースコア': user_scores_list,
+        '全体平均': avg_scores_list
+    })
+
+    # レーダーチャートのプロット
+    fig = px.line_polar(radar_data, r='ユーザースコア', theta='因子', line_close=True, title='ユーザースコア')
+    fig.add_trace(px.line_polar(radar_data, r='全体平均', theta='因子', line_close=True, title='全体平均').data[0])
+
     fig.update_layout(
         polar=dict(
             radialaxis=dict(
-                range=[0, 4]  # 半径の範囲を指定
+                range=[0, 4]  # 必要に応じて範囲を調整
             )
         ),
         font=dict(size=20)
