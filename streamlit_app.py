@@ -9,7 +9,7 @@ def display_feedback(feedback_data, factor):
     for markup, row in zip(markup_rows, feedback_rows):
         # マークアップ列に何かが入力されている場合は、その記号を使う
         if pd.notna(markup):
-            st.markdown(f"{markup} {row} {markup}")
+            st.markdown(f"{markup} {row} ")
         else:
             st.markdown(row)
 
