@@ -21,7 +21,7 @@ file_path = 'questionnaire.xlsx'
 df_questions, df_factors_avg, feedback_above, feedback_below = load_data(file_path)
 
 # ラジオボタンのデフォルト選択肢
-options1 = ["1 全くあてはまらない", "2 あまりあてはまらない", "3 少しあてはまる", "4 とてもあてはまる"]
+options1 = [ "4 とてもあてはまる", "3 少しあてはまる","2 あまりあてはまらない", "1 全くあてはまらない"]
 
 # 設問を表示
 st.title("ストレスチェックアプリ")
