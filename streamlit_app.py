@@ -67,8 +67,8 @@ if user_scores:
     })
 
     # レーダーチャートのプロット
-    fig = px.line_polar(radar_data, r='ユーザースコア', theta='因子', line_close=True, title='ユーザースコア')
-    fig.add_trace(px.line_polar(radar_data, r='全体平均', theta='因子', line_close=True, title='全体平均').data[0])
+    fig = px.line_polar(radar_data, r='ユーザースコア', theta='因子', line_close=True, title='ユーザースコア', line_color='blue')
+    fig.add_trace(px.line_polar(radar_data, r='全体平均', theta='因子', line_close=True, title='全体平均', line_color='red').data[0])
 
     fig.update_layout(
         polar=dict(
