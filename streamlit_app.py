@@ -53,7 +53,7 @@ for factor, factor_data in df_questions.groupby("因子名"):
 # レーダーチャートの描画
 if user_scores:
     st.subheader("＜因子ごとの評価＞")
-    
+
     # レーダーチャート用のデータの準備
     user_scores_list = list(user_scores.values())
     avg_scores_list = [df_factors_avg[df_factors_avg["因子名"] == factor]["平均値"].iloc[0] for factor in user_scores]
@@ -67,7 +67,7 @@ if user_scores:
 
     # レーダーチャートのプロット
     fig = px.line_polar(radar_data, r='ユーザースコア', theta='因子', line_close=True, title='ユーザースコア')
-    fig.add_trace(px.line_polar(radar_data, r='全体平均', theta='因子', line_close=True, title='全体平均').data[0])
+    fig.add_trace(px.line_polar(radar_data, r='全体平均', theta='因子', line_close=True, line_color='red').data[0])
 
     fig.update_layout(
         polar=dict(
