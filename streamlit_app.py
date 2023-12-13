@@ -11,7 +11,7 @@ def load_data(file_path):
     feedback_below = pd.read_excel(file_path, sheet_name='フィードバック（基準未満）')
     return df_questions, df_factors_avg, feedback_above, feedback_below
 
-file_path = '/mnt/data/questionnaire.xlsx'
+file_path = 'questionnaire.xlsx'
 df_questions, df_factors_avg, feedback_above, feedback_below = load_data(file_path)
 
 # ラジオボタンのデフォルト選択肢
