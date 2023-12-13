@@ -2,6 +2,12 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+# フィードバックを表示する関数
+def display_feedback(feedback_data, factor):
+    feedback_rows = feedback_data[factor].dropna()
+    for row in feedback_rows:
+        st.markdown(row)
+
 # Excelファイルを読み込む関数
 @st.cache
 def load_data(file_path):
@@ -69,8 +75,4 @@ for factor in user_scores:
         # 平均値未満の場合のフィードバック
         display_feedback(feedback_below, factor)
 
-# フィードバックを表示する関数
-def display_feedback(feedback_data, factor):
-    feedback_rows = feedback_data[factor].dropna()
-    for row in feedback_rows:
-        st.markdown(row)
+
