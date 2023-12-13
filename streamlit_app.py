@@ -8,7 +8,7 @@ def display_feedback(feedback_data, factor):
     markup_rows = feedback_data['マークアップ'].dropna()
     for markup, row in zip(markup_rows, feedback_rows):
         if markup.startswith("#"):
-            st.markdown(f"{markup} {row}")
+            st.markdown(f"{markup} {row} {markup}")
         else:
             st.markdown(row)
 
