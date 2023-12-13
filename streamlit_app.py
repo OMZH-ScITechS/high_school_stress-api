@@ -69,6 +69,8 @@ for factor in user_scores:
     avg_value = df_factors_avg[df_factors_avg["因子名"] == factor]["平均値"].iloc[0]
     st.subheader(f"＜{factor}＞")
     if user_scores[factor] >= avg_value:
+        # ユーザーの因子得点を表示
+        st.markdown(f"あなたの＜{factor}＞の得点は、{user_scores[factor]}です。")
         # 平均値以上の場合のフィードバック
         display_feedback(feedback_above, factor)
     else:
