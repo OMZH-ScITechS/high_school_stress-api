@@ -43,7 +43,6 @@ for factor, factor_data in df_questions.groupby("因子名"):
         num_questions += 1
     avg_score = total_score / num_questions if num_questions > 0 else 0
     user_scores[factor] = avg_score
-    st.write(f"{factor}の平均点: {avg_score:.2f}")
 
 # レーダーチャートの描画
 if user_scores:
