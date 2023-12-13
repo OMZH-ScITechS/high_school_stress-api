@@ -74,5 +74,7 @@ for factor in user_scores:
         # 平均値以上の場合のフィードバック
         display_feedback(feedback_above, factor)
     else:
+        # ユーザーの因子得点を表示
+        st.markdown(f"あなたの因子得点は「{user_scores[factor]:.2f}」です。")
         # 平均値未満の場合のフィードバック
         display_feedback(feedback_below, factor)
