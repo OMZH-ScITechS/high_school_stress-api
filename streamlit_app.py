@@ -76,10 +76,12 @@ for factor in user_scores:
     if user_scores[factor] >= avg_value:
         # ユーザーの因子得点を表示
         st.markdown(f"あなたの因子得点は「{user_scores[factor]:.2f}」です。")
+        st.markdown(f"全体平均は「{avg_value:.2f}」です。")
         # 平均値以上の場合のフィードバック
         display_feedback(feedback_above, factor)
     else:
         # ユーザーの因子得点を表示
         st.markdown(f"あなたの因子得点は「{user_scores[factor]:.2f}」です。")
+        st.markdown(f"全体平均は「{avg_value:.2f}」です。")
         # 平均値未満の場合のフィードバック
         display_feedback(feedback_below, factor)
