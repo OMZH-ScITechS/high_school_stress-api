@@ -30,7 +30,7 @@ st.caption("Created by 72回生　理数科情報班")
 # 各因子の平均点を計算
 user_scores = {}
 for factor, factor_data in df_questions.groupby("因子名"):
-    st.subheader(factor)
+    st.subheader(f"＜{factor}＞")
     total_score = 0
     num_questions = 0
     for _, row in factor_data.iterrows():
@@ -46,7 +46,7 @@ for factor, factor_data in df_questions.groupby("因子名"):
 
 # レーダーチャートの描画
 if user_scores:
-    st.subheader("因子ごとの評価")
+    st.subheader("＜因子ごとの評価＞")
     fig = px.line_polar(
         r=list(user_scores.values()),
         theta=list(user_scores.keys()),
