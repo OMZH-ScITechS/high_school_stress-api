@@ -21,7 +21,7 @@ file_path = 'questionnaire.xlsx'
 df_questions, df_factors_avg, feedback_above, feedback_below = load_data(file_path)
 
 # ラジオボタンのデフォルト選択肢
-options1 = [ "4 とてもあてはまる", "3 少しあてはまる","2 あまりあてはまらない", "1 全くあてはまらない"]
+options1 = ["1 全くあてはまらない", "2 あまりあてはまらない", "3 少しあてはまる", "4 とてもあてはまる"]
 
 # 設問を表示
 st.title("ストレスチェックアプリ")
@@ -34,6 +34,7 @@ for factor, factor_data in df_questions.groupby("因子名"):
     total_score = 0
     num_questions = 0
     for _, row in factor_data.iterrows():
+        st.markdown(f"**{row['設問名']}**")
         score = st.radio("回答", options1, key=row["設問名"])
         if not pd.isna(row["反転"]):
             score = 5 - int(score[0])
