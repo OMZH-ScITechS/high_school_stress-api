@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import tkinter as tk
 # フィードバックを表示する関数
 def display_feedback(feedback_data, factor):
     feedback_rows = feedback_data[factor].dropna()
@@ -29,33 +28,6 @@ df_questions, df_factors_avg, feedback_above, feedback_below = load_data(file_pa
 options1 = ["4 とてもあてはまる", "3 少しあてはまる", "2 あまりあてはまらない", "1 全くあてはまらない"]
 
 
-
-class LanguageSwitcherApp:
-    def __init__(self, root):
-        self.root = root
-        self.language = tk.StringVar(value="日本語")  # 初期値は日本語
-
-        # ラベル
-        self.label = tk.Label(root, textvariable=self.language, font=("Helvetica", 14))
-        self.label.pack(pady=20)
-
-        # 切り替えボタン
-        self.switch_button = tk.Button(root, text="Switch Language", command=self.toggle_language)
-        self.switch_button.pack(pady=10)
-
-    def toggle_language(self):
-        current_language = self.language.get()
-        if current_language == "日本語":
-            self.language.set("English")
-        else:
-            self.language.set("日本語")
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = LanguageSwitcherApp(root)
-    root.title("Language Switcher")
-    root.geometry("300x150")
-    root.mainloop()
 
 # 設問を表示
 st.title("ストレスチェックアプリ")
