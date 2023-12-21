@@ -1,5 +1,4 @@
 import streamlit as st
-from multiapp import Multiapp
 import pandas as pd
 import plotly.express as px
 # フィードバックを表示する関数
@@ -28,11 +27,7 @@ df_questions, df_factors_avg, feedback_above, feedback_below = load_data(file_pa
 # ラジオボタンのデフォルト選択肢
 options1 = ["4 とてもあてはまる", "3 少しあてはまる", "2 あまりあてはまらない", "1 全くあてはまらない"]
 
-app = Multiapp()
-app.add_app("Japanese ver.",)
-app.add_app("English ver.",)
-app.run()
-df = load_data()
+
 
 # 設問を表示
 st.title("ストレスチェックアプリ")
