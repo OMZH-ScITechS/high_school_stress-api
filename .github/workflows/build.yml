@@ -18,7 +18,7 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: ghcr.io
-        username: zikanwari
+        username: launchpencil
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: meta
       id: meta
