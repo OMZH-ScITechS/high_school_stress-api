@@ -24,7 +24,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v3
       with:
-          images: ghcr.io/OMZH-ScITechS/high_school_stress-api
+          images: ghcr.io/omzh-scitechs/high_school_stress-api
     # 5. setup buildx
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
@@ -38,4 +38,4 @@ jobs:
         context: client
         platforms: linux/amd64,linux/arm64
         push: true
-        tags: ghcr.io/OMZH-ScITechS/high_school_stress-api:latest
+        tags: ghcr.io/omzh-scitechs/high_school_stress-api:latest
