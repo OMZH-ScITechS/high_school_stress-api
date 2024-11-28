@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import pickle
+import math
 from flask import Flask, request, jsonify
 
 results = []
@@ -20,7 +21,8 @@ def handle_json():
         # 応答データの作成
         response_data = {
             "received_data": request.get_json()['list'],
-            "prediction" : prediction[0]
+            "prediction" : math.floor(prediction[0]*100)/100,
+            "prediction_origin": prediction[0]
         }
 
         # JSON形式で応答を返す
