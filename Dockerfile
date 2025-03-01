@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY app.py /app/
-COPY f1.xlsx /app/
-COPY newmodel.pkl /app/
+COPY newmodel_f1.pkl /app/
+COPY newmodel_f2.pkl /app/
 COPY requirements.txt /app/
 
 RUN pip3 install -r requirements.txt
