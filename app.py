@@ -4,7 +4,8 @@ import pickle
 from flask import Flask, request, jsonify
 
 results = []
-model = pickle.load(open('newmodel.pkl', 'rb'))
+model_f1 = pickle.load(open('newmodel_f1.pkl', 'rb'))
+model_f2 = pickle.load(open('newmodel_f2.pkl', 'rb'))
 app = Flask(__name__)
 
 @app.route('/stress/predict', methods=['POST'])
@@ -14,13 +15,18 @@ def handle_json():
             return jsonify({"error": "Content-Type must be application/json"}), 400
 
         results = request.get_json()['list']
-        results_array = np.array(results).reshape(1, -1)
-        prediction = model.predict(results_array)
+        results_f1 = results[:5]
+        results_f2 = results[5:]
+        results_array_f1 = np.array(results_f1).reshape(1, -1)
+        results_array_f2 = np.array(results_f2).reshape(1, -1)
+        prediction_f1 = model_f1.predict(results_array_f1)
+        prediction_f2 = model_f2.predict(results_array_f2)
 
         # 応答データの作成
         response_data = {
             "received_data": request.get_json()['list'],
-            "prediction" : prediction[0]
+            "prediction_f1": prediction_f1[0],
+            "prediction_f2": prediction_f2[0]
         }
 
         # JSON形式で応答を返す
