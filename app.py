@@ -26,8 +26,8 @@ def handle_json():
         # 応答データの作成
         response_data = {
             "received_data": request.get_json()['list'],
-            "prediction_f1": prediction_f1[0],
-            "prediction_f2": prediction_f2[0]
+            "prediction_f1": math.floor(prediction_f1[0]*100)/100,
+            "prediction_f2": math.floor(prediction_f2[0]*100)/100
         }
 
         # JSON形式で応答を返す
