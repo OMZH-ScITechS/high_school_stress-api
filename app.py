@@ -4,47 +4,72 @@ import pickle
 import math
 from flask import Flask, request, jsonify
 
-results = []
-model_f1 = pickle.load(open('newmodel_f1.pkl', 'rb'))
-model_f2 = pickle.load(open('newmodel_f2.pkl', 'rb'))
+# モデルをロード
+MODEL_PATH_F1 = "newmodel_f1.pkl"
+MODEL_PATH_F2 = "newmodel_f2.pkl"
+with open(MODEL_PATH_F1, "rb") as file:
+    model_f1 = pickle.load(file)
+with open(MODEL_PATH_F2, "rb") as file:
+    model_f2 = pickle.load(file)
+
 app = Flask(__name__)
 
 @app.route('/stress/predict', methods=['POST'])
-def handle_json():
+def predict():
     try:
-        if not request.is_json:
-            return jsonify({"error": "Content-Type must be application/json"}), 400
-
-        results = request.get_json()['list']
-        results_f1 = results[:5]
-        results_f2 = results[5:]
-        results_array_f1 = np.array(results_f1).reshape(1, -1)
-        results_array_f2 = np.array(results_f2).reshape(1, -1)
-        prediction_f1 = model_f1.predict(results_array_f1)
-        prediction_f2 = model_f2.predict(results_array_f2)
-
-        # 応答データの作成
-        response_data = {
-            "received_data": request.get_json()['list'],
-            "prediction_f1": math.floor(prediction_f1[0]*100)/100,
-            "prediction_f2": math.floor(prediction_f2[0]*100)/100
-        }
-
-        # JSON形式で応答を返す
-        return jsonify(response_data), 200
-
+        # JSONデータを取得
+        data = request.get_json()
+        
+        # 必要な入力データを取得（ここでは10つの特徴量を想定）
+        features = data.get("features")
+        if not features or len(features) != 10:
+            return jsonify({"error": "10つの特徴量を提供してください。"}), 400
+        
+        # NumPy配列に変換
+        input_array_f1 = np.array(features[:5]).reshape(1, -1)
+        input_array_f2 = np.array(features[5:]).reshape(1, -1)
+        
+        # 予測を実行
+        prediction_f1 = model_f1.predict(input_array_f1)[0]
+        prediction_f2 = model_f2.predict(input_array_f2)[0]
+        
+        # 各特徴量の影響度を計算
+        feature_impact_f1 = []
+        for i in range(5):
+            modified_input = input_array_f1.copy()
+            modified_input[0, i] += 1  # その特徴量だけ +1
+            modified_prediction = model_f1.predict(modified_input)[0]
+            impact = abs(modified_prediction - prediction_f1)
+            feature_impact_f1.append(impact)
+        
+        feature_impact_f2 = []
+        for i in range(5):
+            modified_input = input_array_f2.copy()
+            modified_input[0, i] += 1  # その特徴量だけ +1
+            modified_prediction = model_f2.predict(modified_input)[0]
+            impact = abs(modified_prediction - prediction_f2)
+            feature_impact_f2.append(impact)
+        
+        # 影響が最も大きい上位3つの質問を特定
+        top_indices_f1 = np.argsort(feature_impact_f1)[-3:][::-1]
+        top_impactful_questions_f1 = [f"Q{i+1}" for i in top_indices_f1]
+        top_impact_values_f1 = [feature_impact_f1[i] for i in top_indices_f1]
+        
+        top_indices_f2 = np.argsort(feature_impact_f2)[-3:][::-1]
+        top_impactful_questions_f2 = [f"Q{i+6}" for i in top_indices_f2]
+        top_impact_values_f2 = [feature_impact_f2[i] for i in top_indices_f2]
+        
+        # 結果をJSONで返す
+        return jsonify({
+            "prediction_f1": prediction_f1,
+            "top_impactful_questions_f1": top_impactful_questions_f1,
+            "top_impact_values_f1": top_impact_values_f1,
+            "prediction_f2": prediction_f2,
+            "top_impactful_questions_f2": top_impactful_questions_f2,
+            "top_impact_values_f2": top_impact_values_f2
+        })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# エラーハンドリング
-@app.errorhandler(400)
-def bad_request(error):
-    return jsonify({"error": "Bad Request"}), 400
-
-@app.errorhandler(405)
-def method_not_allowed(error):
-    return jsonify({"error": "Method Not Allowed"}), 405
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=False, port=5000)
-    print('server stated')
+    app.run(host='0.0.0.0', port=5000, debug=True)
