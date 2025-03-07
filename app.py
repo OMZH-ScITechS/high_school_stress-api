@@ -12,12 +12,9 @@ app = Flask(__name__)
 
 @app.route('/stress/predict', methods=['POST'])
 def predict():
-    try:
-        # JSONデータを取得
-        data = request.get_json()
-        
+    try:        
         # 必要な入力データを取得（ここでは10つの特徴量を想定）
-        features = data.get("features")
+        features = request.get_json()['list']
         if not features or len(features) != 10:
             return jsonify({"error": "Invalid numbers of features."}), 400
         
