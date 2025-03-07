@@ -5,12 +5,8 @@ import math
 from flask import Flask, request, jsonify
 
 # モデルをロード
-MODEL_PATH_F1 = "newmodel_f1.pkl"
-MODEL_PATH_F2 = "newmodel_f2.pkl"
-with open(MODEL_PATH_F1, "rb") as file:
-    model_f1 = pickle.load(file)
-with open(MODEL_PATH_F2, "rb") as file:
-    model_f2 = pickle.load(file)
+model_f1 = pickle.load(open('newmodel_f1.pkl', 'rb'))
+model_f2 = pickle.load(open('newmodel_f2.pkl', 'rb'))
 
 app = Flask(__name__)
 
@@ -23,7 +19,7 @@ def predict():
         # 必要な入力データを取得（ここでは10つの特徴量を想定）
         features = data.get("features")
         if not features or len(features) != 10:
-            return jsonify({"error": "10つの特徴量を提供してください。"}), 400
+            return jsonify({"error": "Invalid numbers of features."}), 400
         
         # NumPy配列に変換
         input_array_f1 = np.array(features[:5]).reshape(1, -1)
