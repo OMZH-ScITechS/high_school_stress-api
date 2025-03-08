@@ -52,13 +52,26 @@ def predict():
         top_impactful_questions_f2 = [i+5 for i in top_indices_f2]
         top_impact_values_f2 = [feature_impact_f2[i] for i in top_indices_f2]
         
+        questions = [
+            "今の自分の成績への不満はありますか",
+            "学習の面でプレッシャーを感じていますか",
+            "授業に圧迫感や緊迫感を感じますか",
+            "今の学校生活で、心に余裕を持てていますか",
+            "授業内容について、質問をしてもわからない問題(解決できなかった／解けなかった問題)がありましたか",
+            "授業に対して必要性を感じますか",
+            "今の授業に満足していますか",
+            "授業は関心を持てる内容ですか",
+            "教師に質問しやすい環境が整っていると思いますか",
+            "授業は退屈ですか"
+        ]
+
         # 結果をJSONで返す
         return jsonify({
             "prediction_f1": prediction_f1,
-            "top_impactful_questions_f1": top_impactful_questions_f1,
+            "top_impactful_questions_f1": [questions[i] for i in top_impactful_questions_f1],
             "top_impact_values_f1": top_impact_values_f1,
             "prediction_f2": prediction_f2,
-            "top_impactful_questions_f2": top_impactful_questions_f2,
+            "top_impactful_questions_f2": [questions[i] for i in top_impactful_questions_f2],
             "top_impact_values_f2": top_impact_values_f2
         })
     except Exception as e:
