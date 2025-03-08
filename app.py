@@ -45,11 +45,11 @@ def predict():
         
         # 影響が最も大きい上位3つの質問を特定
         top_indices_f1 = np.argsort(feature_impact_f1)[-3:][::-1]
-        top_impactful_questions_f1 = [int(i) for i in top_indices_f1]
+        top_impactful_questions_f1 = [i for i in top_indices_f1]
         top_impact_values_f1 = [feature_impact_f1[i] for i in top_indices_f1]
         
         top_indices_f2 = np.argsort(feature_impact_f2)[-3:][::-1]
-        top_impactful_questions_f2 = [int(i+5) for i in top_indices_f2]
+        top_impactful_questions_f2 = [i+5 for i in top_indices_f2]
         top_impact_values_f2 = [feature_impact_f2[i] for i in top_indices_f2]
         
         # 結果をJSONで返す
