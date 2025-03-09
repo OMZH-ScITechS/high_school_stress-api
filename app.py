@@ -67,10 +67,10 @@ def predict():
 
         # 結果をJSONで返す
         return jsonify({
-            "prediction_f1": prediction_f1,
+            "prediction_f1": math.floor(prediction_f1*100)/100,
             "top_impactful_questions_f1": [questions[i] for i in top_impactful_questions_f1],
             "top_impact_values_f1": top_impact_values_f1,
-            "prediction_f2": prediction_f2,
+            "prediction_f2": math.floor(prediction_f2*100)/100,
             "top_impactful_questions_f2": [questions[i] for i in top_impactful_questions_f2],
             "top_impact_values_f2": top_impact_values_f2
         })
